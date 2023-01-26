@@ -44,6 +44,7 @@ void mostrarVectorTupla(vector<pair<int,int>> vt);
 int contarApariciones(vector<int> v, int elem);
 vector<pair<int, int> > cantidadApariciones(vector<int> v);
 
+bool esPalindromo(string s);
 void palindromos(string rutaArchivoIn, string rutaArchivoOut);
 
 void promedios(string rutaArchivoIn1, string rutaArchivoIn2, string rutaArchivoOut);
@@ -52,4 +53,4 @@ void cantidadApariciones(string rutaArchivoIn, string rutaArchivoOut);
 
 void estadisticas(string rutaArchivo);
 
-void interseccion();
+void interseccion(string rutaArchivoIn1, string rutaArchivoIn2);

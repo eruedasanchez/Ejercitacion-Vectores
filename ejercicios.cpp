@@ -238,28 +238,163 @@ vector<pair<int,int>> cantidadApariciones(vector<int> v){
     return elemYApariciones;
 }
 
-void palindromos(string rutaArchivoIn, string rutaArchivoOut)
-{
-    cout << "Implementame!" << endl;
+bool esPalindromo(string s){
+    bool res = true;
+    for(int i = 0; i < (s.size() / 2); i++){
+        if(s[i] != s[(s.size()-1) - i]){
+            res = false;
+            break;
+        }
+    }
+    return res;
 }
 
-void promedios(string rutaArchivoIn1, string rutaArchivoIn2, string rutaArchivoOut)
-{
-    cout << "Implementame!" << endl;
+void palindromos(string rutaArchivoIn, string rutaArchivoOut){
+
+    vector<string> palabras;
+
+    /* Lectura de las palabras */
+    ifstream archivoIn;
+    archivoIn.open(rutaArchivoIn, ios::in);
+    while(!archivoIn.eof()){
+        string palabra;
+        archivoIn >> palabra;
+        palabras.push_back(palabra);
+    }
+    archivoIn.close();
+
+    /* Escritura de los palindromos en rutaArchivoOut */
+    ofstream archivoOut;
+    archivoOut.open(rutaArchivoOut);
+    for(int i = 0; i < palabras.size(); i++){
+        if(esPalindromo(palabras[i])){
+            archivoOut << palabras[i] << " , ";
+        }
+    }
+    archivoOut.close();
 }
 
-void cantidadApariciones(string rutaArchivoIn, string rutaArchivoOut)
-{
-    cout << "Implementame!" << endl;
+void promedios(string rutaArchivoIn1, string rutaArchivoIn2, string rutaArchivoOut){
+    vector<float> numerosPrimerArchivo;
+    vector<float> numerosSegundoArchivo;
+
+    /* Lectura de los numeros del primer archivo */
+    ifstream archivoIn1;
+    archivoIn1.open(rutaArchivoIn1, ios::in);
+    while(!archivoIn1.eof()){
+        float r1;
+        archivoIn1 >> r1;
+        numerosPrimerArchivo.push_back(r1);
+    }
+    archivoIn1.close();
+
+    /* Lectura de los numeros del segundo archivo */
+    ifstream archivoIn2;
+    archivoIn2.open(rutaArchivoIn2, ios::in);
+    while(!archivoIn2.eof()){
+        float r2;
+        archivoIn2 >> r2;
+        numerosSegundoArchivo.push_back(r2);
+    }
+    archivoIn2.close();
+
+    /* Escritura de los promedios en rutaArchivoOut */
+
+    ofstream archivoOut;
+    archivoOut.open(rutaArchivoOut);
+    for(int i = 0; i < numerosPrimerArchivo.size(); i++){
+        archivoOut << (numerosPrimerArchivo[i] + numerosSegundoArchivo[i]) / 2 << " , ";
+    }
+    archivoOut.close();
 }
 
-void estadisticas(string rutaArchivo)
-{
-    cout << "Implementame!" << endl;
+void cantidadApariciones(string rutaArchivoIn, string rutaArchivoOut){
+    vector<int> numeros;
+
+    /* Lectura de los numeros */
+    ifstream archivoIn;
+    archivoIn.open(rutaArchivoIn, ios::in);
+    while(!archivoIn.eof()){
+        int num;
+        archivoIn >> num;
+        numeros.push_back(num);
+    }
+    archivoIn.close();
+
+    /* Escritura de los palindromos en rutaArchivoOut */
+    ofstream archivoOut;
+    archivoOut.open(rutaArchivoOut);
+    for(int i = 0; i < numeros.size(); i++){
+        if(!estaEnElSubvector(numeros, numeros[i], 0, i)){
+            archivoOut << " ' " << numeros[i] << " " << contarApariciones(numeros, numeros[i]) << " ' " << " ";
+        }
+    }
+    archivoOut.close();
 }
 
-void interseccion()
-{
-    cout << "Implementame!" << endl;
+void estadisticas(string rutaArchivo){
+    vector<string> palabrasDelArchivo;
+
+    /* Lectura de las palabras del archivo */
+    ifstream archivoIn;
+    archivoIn.open(rutaArchivo, ios::in);
+    while(!archivoIn.eof()){
+        string palabra;
+        archivoIn >> palabra;
+        palabrasDelArchivo.push_back(palabra);
+    }
+    archivoIn.close();
+
+    /* Calculo de la palabra con maxima longitud */
+
+    int maximaLongitudPalabra = palabrasDelArchivo[0].size();
+    for(int i = 1; i < palabrasDelArchivo.size(); i++){
+        if(maximaLongitudPalabra < palabrasDelArchivo[i].size()){
+            maximaLongitudPalabra = palabrasDelArchivo[i].size();
+        }
+    }
+
+    /* Agrupacion de las palabras de acuerdo a su longitud */
+    vector<vector<string>> palabrasAgrupadasPorLong(maximaLongitudPalabra);
+    for(int j = 0; j < palabrasDelArchivo.size(); j++){
+        (palabrasAgrupadasPorLong[palabrasDelArchivo[j].size() - 1]).push_back(palabrasDelArchivo[j]);
+    }
+
+    /* Impresion por pantalla de la cantidad de palabras de acuerdo a su longitud */
+    for(int k = 0; k < maximaLongitudPalabra; k++){
+        cout << "Palabras de longitud " << k+1 << ": " << (palabrasAgrupadasPorLong[k]).size() << endl;
+    }
+}
+
+void interseccion(string rutaArchivoIn1, string rutaArchivoIn2){
+    vector<int> numerosPrimerArchivo;
+    vector<int> numerosSegundoArchivo;
+
+    /* Lectura de los numeros del primer archivo */
+    ifstream archivoIn1;
+    archivoIn1.open(rutaArchivoIn1, ios::in);
+    while(!archivoIn1.eof()){
+        float r1;
+        archivoIn1 >> r1;
+        numerosPrimerArchivo.push_back(r1);
+    }
+    archivoIn1.close();
+
+    /* Lectura de los numeros del segundo archivo */
+    ifstream archivoIn2;
+    archivoIn2.open(rutaArchivoIn2, ios::in);
+    while(!archivoIn2.eof()){
+        float r2;
+        archivoIn2 >> r2;
+        numerosSegundoArchivo.push_back(r2);
+    }
+    archivoIn2.close();
+
+    /* Escritura de la interseccion por pantalla */
+    for(int i = 0; i < numerosPrimerArchivo.size(); i++){
+        if(!estaEnElSubvector(numerosPrimerArchivo, numerosPrimerArchivo[i], 0, i) && estaEnElSubvector(numerosSegundoArchivo, numerosPrimerArchivo[i], 0, numerosSegundoArchivo.size())){
+            cout << numerosPrimerArchivo[i] << " , ";
+        }
+    }
 }
 
